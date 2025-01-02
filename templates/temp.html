@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Baloo Tamma 2' rel='stylesheet'>
+    <title>BrainyBot</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: linear-gradient(to bottom right, rgb(41, 20, 41), INDIGO);
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: rgb(255, 255, 255);
+            font-family: 'Baloo Tamma 2';
+            font-size: 40px;
+            padding: 0%;
+            margin: 0%;
+        }
+
+
+    .chat-container {
+        flex: 1;
+        display: inline;
+        flex-direction: column;
+        justify-content: flex-end;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #9177d3;
+        border-radius: 8px;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+        overflow-y: scroll; /* Enable vertical scrolling */
+        height: 400px; /* Set a fixed height */
+        width: 400px;
+        scroll-behavior: smooth; /* Enables smooth scrolling */
+    }
+
+    .chat-container::-webkit-scrollbar {
+        width: 8px; /* Width of the scrollbar */
+    }
+
+    .chat-container::-webkit-scrollbar-track {
+        background: #f4f4f4; /* Background of the scrollbar track */
+        border-radius: 8px;
+    }
+
+    .chat-container::-webkit-scrollbar-thumb {
+        background: rgb(140, 130, 143); /* Color of the scrollbar handle */
+        border-radius: 8px;
+    }
+
+    .chat-container::-webkit-scrollbar-thumb:hover {
+        background: rgb(98, 98, 98); /* Darker color on hover */
+    }
+        .message-container {
+            margin: 5px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .user-message-container {
+            align-items: flex-end;
+        }
+
+        .message-label {
+            font-size: 12px;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background-color: #f8d7da;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #afa1b7;
+            align-self: flex-start;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 10px auto;
+            display: flex;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #cbd1cb;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #703c8d;
+            width: 10%;
+        }
+    </style>
+    </head>
+    <body>
+        <h1>BrainyBot</h1>
+    
+        <div class="chat-container" id="chat-container">
+            {% for msg, role in messages %}
+                <div class="message-container {{ 'user-message-container' if role == 'user' else '' }}">
+                    <div class="message-label">
+                        {{ 'User' if role == 'user' else 'Bot' }}
+                    </div>
+                    <div class="message {{ 'user-message' if role == 'user' else 'bot-message' }}">
+                        <p>{{ msg }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    
+        <form method="post" action="{{ url_for('home') }}">
+            {{ form.hidden_tag() }}
+            {{ form.text(size=40, placeholder="Type your message...") }}
+            {{ form.submit(class_="send-btn") }}
+        </form>
+
+        <script>
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        </script>
+    </body>
+    </html>
