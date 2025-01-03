@@ -26,7 +26,7 @@ chat_history=[]
 def home():
     global chat_history
     form=Form()
-    co=cohere.Client('ekGZOasoMhsGjtszaBlHquIjcKXErjRQHIFeUQsu') #Initializing cohere client using API 
+    co=cohere.Client(API) #Initializing cohere client using API 
 
     if form.validate_on_submit():
         user=form.text.data #Getting input from Form class
